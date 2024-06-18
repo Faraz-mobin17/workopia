@@ -6,7 +6,7 @@
  * @param string $path
  * @return string
  */
-function base_path($path = '')
+function base_path(string $path = ''): string
 {
     return __DIR__ . '/' . $path;
 }
@@ -14,13 +14,15 @@ function base_path($path = '')
 /**
  * Load a view 
  * @param string $name
+ * @param array $data
  * @return void
  */
 
-function loadView($name)
+function loadView(string $name, array $data = []): void
 {
     $viewPath =  base_path("views/{$name}.view.php");
     if (file_exists($viewPath)) {
+        extract($data);
         require $viewPath;
     } else {
         echo "View not found {$name} not found";
@@ -34,7 +36,7 @@ function loadView($name)
  * @return void
  */
 
-function loadPartial($name)
+function loadPartial(string $name): void
 {
     $partialFile =  base_path("partials/{$name}.php");
     if (file_exists($partialFile)) {
@@ -50,7 +52,7 @@ function loadPartial($name)
  * @return void
  */
 
-function inspect($value)
+function inspect(mixed $value): void
 {
     echo '<pre>';
     var_dump($value);
@@ -64,10 +66,21 @@ function inspect($value)
  * @return void
  */
 
-function inspectAndDie($value)
+function inspectAndDie(mixed $value): void
 {
     echo '<pre>';
     var_dump($value);
     echo '</pre>';
     die();
+}
+
+/**
+ * format salary
+ * @param string $salary
+ * @return string formattedSalary
+ */
+
+function formatSalary(string $salary): string
+{
+    return number_format(floatval($salary));
 }
